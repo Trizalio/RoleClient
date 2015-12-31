@@ -1,0 +1,33 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Speech synthesis test</title>
+        <script type="text/javascript" charset="utf-8" src="jquery-2.1.4.js"></script>
+        
+        <script>
+            function read() {
+                //alert("event got");
+                console.log("event got");
+                console.log($("#input_text").val());
+                var msg = new SpeechSynthesisUtterance($("#input_text").val());
+                console.log(msg);
+                console.log(speechSynthesis.getVoices());
+                speechSynthesis.getVoices().forEach(function(voice) {
+                  console.log(voice.name, voice.lang, voice.default ? '(default)' :'');
+                });
+                msg.lang = 'ru-RU';
+                window.speechSynthesis.speak(msg);
+            }
+        </script>    
+    </head>
+    <body>
+
+        <input type="text" id="input_text">
+        <button onclick="read()">Кнопка с текстом</button>
+        <!-- <img id="yourimage"> -->
+        <p id="qr-text"></p>
+        
+    </body>
+</html>

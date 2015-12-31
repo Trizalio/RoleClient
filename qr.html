@@ -1,0 +1,67 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Qr test</title>
+        <script type="text/javascript" charset="utf-8" src="jquery-2.1.4.js"></script>
+
+        <script type="text/javascript" src="jsqrcode/src/grid.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/version.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/detector.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/formatinf.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/errorlevel.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/bitmat.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/datablock.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/bmparser.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/datamask.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/rsdecoder.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/gf256poly.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/gf256.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/decoder.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/qrcode.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/findpat.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/alignpat.js"></script>
+        <script type="text/javascript" src="jsqrcode/src/databr.js"></script>
+        
+    </head>
+    <body>
+
+        <input type="file" capture="camera" accept="image/*" id="takePictureField">
+        <!-- <img id="yourimage"> -->
+        <p id="qr-text"></p>
+        
+        <script>
+            qrcode.callback = decodedQR;
+            var desiredWidth;
+            $(document).ready(function() {
+                console.log('onReady');
+                $("#takePictureField").on("change",gotPic);
+                desiredWidth = window.innerWidth;
+                
+                if(!("url" in window) && ("webkitURL" in window)) {
+                    window.URL = window.webkitURL;   
+                }
+                
+            });
+            
+            //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
+            function gotPic(event) {
+                //alert("event got");
+                //console.log("event got");
+                if(event.target.files.length == 1 && 
+                   event.target.files[0].type.indexOf("image/") == 0) {
+                    qrcode.decode(URL.createObjectURL(event.target.files[0]));
+                    //$("#yourimage").attr("src",URL.createObjectURL(event.target.files[0]));
+                }
+            }
+            function decodedQR(data) {
+                console.log(data);
+                $("#qr-text").text( data );
+            }
+        
+        
+            
+        </script>    
+    </body>
+</html>
