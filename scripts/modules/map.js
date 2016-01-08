@@ -249,8 +249,8 @@ define(["modules/canvas", "libs/jquery-2.1.4"],
                 TopCellBorder -= this.MAP_HEIGHT / 2;
                 BottomCellBorder -= this.MAP_HEIGHT / 2;
 
-                var BasePointX = this.getPlanetPosition(Map).X;//this.MAP_WIDTH / 2;
-                var BasePointY = this.getPlanetPosition(Map).Y;//this.MAP_HEIGHT * (1 / 2) + this.MAP_WIDTH / 2;
+                var BasePointX = this.getPlanetPosition().X;//this.MAP_WIDTH / 2;
+                var BasePointY = this.getPlanetPosition().Y;//this.MAP_HEIGHT * (1 / 2) + this.MAP_WIDTH / 2;
                 var Radius = this.getPlanetRadius();
                 Canv.draw4DotPoligon(Canvas, BasePointX, BasePointY, k,
                                     Radius * AlphaLeftCos * BetaTopCos , Radius * BetaTopSin,
@@ -274,7 +274,7 @@ define(["modules/canvas", "libs/jquery-2.1.4"],
                 var k = Math.min(Canvas.width / this.MAP_WIDTH, Canvas.height / this.MAP_HEIGHT);
                 console.log("renderMap: " + Angle);
                 // Canv.fillCanvas(Canvas, "black");
-                Canv.drawRect(Canvas, this.getPlanetPosition(Map).X, this.getPlanetPosition(Map).Y, k,
+                Canv.drawRect(Canvas, this.getPlanetPosition().X, this.getPlanetPosition().Y, k,
                                 -this.getPlanetRadius(),
                                 -this.getPlanetRadius(),
                                 this.getPlanetRadius() * 2,

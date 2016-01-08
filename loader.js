@@ -10,7 +10,7 @@ function addScript(url) {
 }
 
 scriptsToLoad.forEach(function(entry){
-    console.log("Dounloading " + entry);
+    console.log("Dowloading " + entry);
     addScript(entry);
 });
 
