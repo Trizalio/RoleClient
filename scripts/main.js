@@ -1,5 +1,5 @@
-define(["modules/html/dom", "modules/canvas", "modules/map", "modules/websocket", "libs/jquery-2.1.4"],
-    function(dom, canv, map, ws, $){
+define(["modules/html/bootstrap", "modules/canvas", "modules/map", "modules/websocket", "libs/jquery-2.1.4"],
+    function(btsp, canv, map, ws, $){
         // var Button = dom.createButton("buttonl1", function(){alert("ok1");});
         // dom.addToHeadLeft(Button);
         // Button = dom.createButton("buttonl2", function(){alert("ok2");});
@@ -7,32 +7,34 @@ define(["modules/html/dom", "modules/canvas", "modules/map", "modules/websocket"
         // Button = dom.createButton("buttonr1", function(){alert("ok3");});
         // dom.addToHeadRight(Button);
         var that = this;
-        var callback = function() {dom.addActionToHead("Buttonr2", function(){alert("ok4");});}
+        var callback = function() {btsp.addActionToHead("Buttonr2", function(){alert("ok4");});}
         // dom.addActionToHead("Buttonr2", function(){alert("ok4");});
-        dom.setNameToHead("Name", callback);
+        btsp.setNameToHead("Name", callback);
+        btsp.setNameToHead("Name2", callback);
+        btsp.initHideButton();
         // dom.addToHeadRight(Button);
         // Button = dom.createLi("li", function(){alert("ok4");});
         // dom.addToHeadRight(Button);
-        var Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
-        Jumbo = dom.createJumbotron("Header", "body");
-        dom.addToBody(Jumbo);
+        // var Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
+        // Jumbo = dom.createJumbotron("Header", "body");
+        // dom.addToBody(Jumbo);
 
         // var Canvas = canv.createCanvas();
         // Canvas.width = window.innerWidth ;
