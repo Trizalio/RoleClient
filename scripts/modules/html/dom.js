@@ -28,12 +28,26 @@ define(
                 return obj;
 
             },
-            getXFromYAndCreateXWithTypeZ: function (X, Y, Z){
+            getXFromYAndCreateXWithTypeZ: function (X, Y, Z, prepend){
                 var object = Y.getElementsByClassName( X )[0];
                 if(!object){
                     object = document.createElement(Z);
                     object.className = X;
-                    Y.appendChild( object );
+                    if(prepend)
+                    {
+                        if(Y.children.length)
+                        {
+                            Y.insertBefore( object, Y.children[0]);
+                        }
+                        else
+                        {
+                            Y.appendChild( object );
+                        }
+                    }
+                    else
+                    {
+                        Y.appendChild( object );
+                    }
                 }
                 return object;
             },

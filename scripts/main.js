@@ -1,17 +1,19 @@
-define(["modules/html/bootstrap", "modules/canvas", "modules/map", "modules/websocket", "libs/jquery-2.1.4"],
-    function(btsp, canv, map, ws, $){
+define(["modules/html/buisness", "modules/canvas", "modules/map", "modules/websocket", "libs/jquery-2.1.4"],
+    function(buis, canv, map, ws, $){
+        buis.processHash();
+        // buis.init();
         // var Button = dom.createButton("buttonl1", function(){alert("ok1");});
         // dom.addToHeadLeft(Button);
         // Button = dom.createButton("buttonl2", function(){alert("ok2");});
         // dom.addToHeadLeft(Button);
         // Button = dom.createButton("buttonr1", function(){alert("ok3");});
         // dom.addToHeadRight(Button);
-        var that = this;
-        var callback = function() {btsp.addActionToHead("Buttonr2", function(){alert("ok4");});}
-        // dom.addActionToHead("Buttonr2", function(){alert("ok4");});
-        btsp.setNameToHead("Name", callback);
-        btsp.setNameToHead("Name2", callback);
-        btsp.initHideButton();
+        // var that = this;
+        // var callback = function() {btsp.addActionToHead("Buttonr2", function(){alert("ok4");});}
+        // // dom.addActionToHead("Buttonr2", function(){alert("ok4");});
+        // btsp.setNameToHead("Name", callback);
+        // btsp.setNameToHead("Name2", callback);
+        // btsp.initHideButton();
         // dom.addToHeadRight(Button);
         // Button = dom.createLi("li", function(){alert("ok4");});
         // dom.addToHeadRight(Button);
