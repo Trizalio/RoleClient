@@ -1,14 +1,27 @@
-define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modules/html/locations/login", "modules/html/locations/private"],
-    function(dom, btsp, ws, login, priv){
+define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
+    "modules/html/locations/login",
+    "modules/html/locations/private",
+    "modules/html/locations/messages",
+    "modules/html/locations/projects",
+    "modules/html/locations/people"],
+    function(dom, btsp, ws, login, priv, mes, proj, peop){
         var buis = {
+            ////////////////////////////////
+            /// TODO WEBSOCKET RECONNECT ///
+            ////////////////////////////////
             addLocation: function(Name, Address, Handler){
                 // console.log(buis);
                 if(!buis._handlers){
                     buis._handlers = {};
                 }
                 buis._handlers[Address] = Handler;
+
+                if(!buis._locations){
+                    buis._locations = {};
+                }
+                buis._locations[Address] = btsp.addActionToHead(Name, buis.authFail, "#" + Address);
+                
                 // console.log(buis._handlers);
-                btsp.addActionToHead(Name, buis.authFail, "#" + Address);
             },
             addDefaultLocation: function(Name, Address, Handler){
                 // console.log(buis);
@@ -54,17 +67,27 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
                     
 
                 var Hash = window.location.hash;
-                console.log(Hash);
+                // console.log(Hash);
                 var Path = Hash.split("#");
                 var Container = btsp.getBodyContainer();
                 var Handler;
 
+                for (var LocationObject in buis._locations) {
+                    if (buis._locations.hasOwnProperty(LocationObject)) {
+                        dom.set(buis._locations[LocationObject], {class:""});
+                    }
+                }
+
                 if(window.authDone){
                     if (Path.length > 1) {
                         var TargetLocation = Path[1];
-                        console.log(TargetLocation);
-                        Handler = buis._handlers[TargetLocation];
                         Path.splice(0, 2);
+                        // console.log(TargetLocation);
+                        Handler = buis._handlers[TargetLocation];
+                        LocationObject = buis._locations[TargetLocation];
+                        if(LocationObject){
+                            dom.set(LocationObject, {class:"active"});
+                        }
 
                     } else {
                         console.log(buis._defaultHandler);
@@ -76,11 +99,13 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
                 }
 
                 if(Handler) {
-                    console.log(Handler);
+                    // console.log(Handler);
                     btsp.clean(Container);
+                    btsp.deleteAlerts();
                     Handler.show(Container, Path);
                 } else {
-                    console.log("ERROR: location handler isn`t set", Hash);
+                    window.location.hash = "";
+                    // console.log("ERROR: location handler isn`t set", Hash);
                 }
                 
             },
@@ -92,7 +117,13 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
                 // TODO: get hash and navigate there
                 btsp.initHideButton();
                 buis.addDefaultLocation("База", "home", priv);
+                buis.addLocation("Проекты", "projects", proj);
+                buis.addLocation("Люди", "people", peop);
+                buis.addLocation("Сообщения", "messages", mes);
                 buis.addLocation("Мой профиль", "private", priv);
+                // buis.addLocation("Выход", "exit", {show:function(){
+                //     window.location.hash = "login";
+                //     window.authDone = false;}});
                 buis.addLoginLocation(login);
 
                 // btsp.deleteBody();

@@ -60,21 +60,22 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 var Collapse = dom.findClassInObjectAndReturnOrCreateWithArgs ( Container, {tag:"div", class:"navbar-collapse collapse", id:"navbar"});
                 var Right = dom.findClassInObjectAndReturnOrCreateWithArgs ( Collapse, {tag:"ul", class:"nav navbar-nav navbar-right"});
             
-                var tmp =  dom.create(
-                            {tag:"a", href:hash,text:text,onclick:onClick}
+                var tmp =  dom.create
+                        (
+                            {tag:"li",/*class:"active",*/role:"presentation"}
                         );
                 // console.log(tmp.onclick);
                 // console.log(onClick);
                 Right.appendChild
                 ( 
                     dom.insert(
-                        dom.create
-                        (
-                            {tag:"li",/*class:"active",*/role:"presentation"}
-                        ),
-                        tmp
+                        tmp,
+                        dom.create(
+                            {tag:"a", href:hash,text:text,onclick:onClick}
+                        )
                     )
                 );
+                return tmp;
             },
             addToBody: function (object){
                 // var Main = this.getXFromYAndCreateXWithTypeZ("main", document.body, "div");
@@ -143,88 +144,27 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 // );
                 this.addAlert(Alert);
             },
-            getPrivateDisplay: function(User, Player){
-
-// <div class="col-xs-12 col-sm-9">
-//           <ul class="nav nav-tabs" id="myTab">
-//             <li class="active"><a href="#common" data-toggle="tab">Общая информация</a></li>
-//             <li><a href="#work" data-toggle="tab">Деятельность</a></li>
-//             <li><a href="#projects" data-toggle="tab">Проекты</a></li>
-//             {% if showhealth or self %}
-//               <li><a href="#health" data-toggle="tab">Здоровье</a></li>
-//             {% endif %}
-//             {% if self %}
-//               <li><a href="#closed" data-toggle="tab">Неигровая информация</a></li>
-//             {% endif %}
-//           </ul>
-
-//           <div class="tab-content">
-//             <div class="tab-pane active" id="common">
-//               <div class="well">
-//                <!--<p><b>Имя: {{ profile.name }}</b></p>
-//                <p><b>Фамилия: {{ profile.surname }}</b></p>-->
-//                <p><b>ФИО:</b> {{ profile.surname }} {{ profile.name }} {{ profile.middlename }}</p>
-//                <p><b>Возраст:</b> {{ profile.age }}</p>
-//                <p><b>Пол:</b> {% if profile.male %}Мужской{% endif %}{% if not profile.male %}Женский{% endif %}
-//               </div>
-//             </div>
-//             <div class="tab-pane" id="work">
-//               <div class="well">
-//                <p><b>Должность:</b> {{ profile.workstatus }}</p>
-//                <p><b>Класс допуска:</b> {{ profile.access }}</p>
-//                <p><b>Специальность:</b> {{ profile.education }}</p>
-//               </div>
-//             </div>
-
-//             {% if showhealth or self %}
-//               <div class="tab-pane" id="health">
-//                 <div class="well">
-//                  <p><b>HP(пункты здоровья)(максимум):</b> </p>
-//                  <br>
-//                  <p><b>Импланты:</b> </p>
-//                  <p><b>Группа крови:</b> </p>
-//                  <p><b>Заболевания:</b> </p>
-//                  <p><b>Терапия:</b> </p>
-//                  <p><b>Дата последнего осмотра:</b> </p>
-//                 </div>
-//               </div>
-//             {% endif %}
-
-//             <div class="tab-pane" id="projects">
-//               {% if projectmembers %}
-//                {% for n in projectmembers %}
-//                 <div class="well">
-//                  <a href="/project/{{ n.project_id }}/">{{ n.project.name }} </a>
-//                  <p>{{ n.status }}</p>
-//                 </div>
-//                {% endfor %}
-//               {% else %}
-//                <div class="well">
-//                 <h4><p class="text-error">На проектах не заригистрирован</p></h4>
-//                </div>
-//               {% endif %}
-//             </div>
-
-//             {% if self %}
-//               <div class="tab-pane" id="closed">
-//                 <div class="well">
-//                  <!--<p><b>Имя: {{ profile.name }}</b></p>
-//                  <p><b>Фамилия: {{ profile.surname }}</b></p>-->
-//                  <p><b>Квента:</b></p>
-//                  <p><b>Квесты(задачи на игру):</b></p>
-//                  <p><b>Сдан ли взнос:</b></p>
-//                 </div>
-//               </div>
-//             {% endif %}
-
-//           </div>
-//          </div>
-
-//                 <ul class="nav nav-tabs">
-//   <li role="presentation" class="active"><a href="#">Home</a></li>
-//   <li role="presentation"><a href="#">Profile</a></li>
-//   <li role="presentation"><a href="#">Messages</a></li>
-// </ul>
+            getManDisplay: function(User){
+                // var Jumbotron = dom.create(
+                    // {tag:"div",class:"col-lg-12",role:"presentation"});
+                var WellUser = dom.create(
+                    {tag:"div",class:"well well-sm", 
+                        text: 
+                        User.Surname + " " + 
+                        User.Name + " " + 
+                        User.Patronymic + ", " + 
+                        User.Profession});
+                // dom.insert(WellUser,
+                //     dom.create(
+                //         {tag:"p", 
+                //         text: 
+                //         User.Surname + " " + 
+                //         User.Name + " " + 
+                //         User.Patronymic + ", " + 
+                //         User.Profession}));
+                return WellUser;
+            },
+            getPrivateDisplay: function(User, Player, logout){
                 var Jumbotron = dom.create(
                     {tag:"div",class:"col-lg-12",role:"presentation"});
                 var Nav = dom.create(
@@ -248,6 +188,17 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                             {tag:"li", role:"presentation"}),
                         dom.create(
                             {tag:"a", "data-toggle":"tab", href:"#player", text:"Игрок"})));
+                dom.insert(Nav,
+                    dom.create(
+                        {
+                            tag:"a", 
+                            text:"Выход",
+                            role:"button",
+                            class:"btn btn-lg btn-danger",
+                            onclick:logout
+                        }
+                    )
+                );
 
 
                 var TabContent = dom.create(
@@ -259,13 +210,30 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 dom.insert(TabContent,TabPaneUser);
                 var WellUser = dom.create(
                     {tag:"div",class:"well"});
+                dom.insert(TabPaneUser,WellUser);
                 dom.insert(WellUser,
                     dom.create(
                         {tag:"p", text:"Имя:" + User.Name}));
                 dom.insert(WellUser,
                     dom.create(
                         {tag:"p", text:"Фамилия:" + User.Surname}));
-                dom.insert(TabPaneUser,WellUser);
+                dom.insert(WellUser,
+                    dom.create(
+                        {tag:"p", text:"Отчество:" + User.Patronymic}));
+                dom.insert(WellUser,
+                    dom.create(
+                        {tag:"p", text:"Специальность:" + User.Profession}));
+                dom.insert(WellUser,
+                    dom.create(
+                        {tag:"p", text:"Характеристика:" + User.Description}));
+                var GroupsListDOMO = dom.create(
+                        {tag:"p", text:"Состоит в группах:"});
+                dom.insert(WellUser, GroupsListDOMO);
+                for (var i = 0; i < User.Groups.length; ++i) {
+                    dom.insert(GroupsListDOMO,
+                        dom.create(
+                            {tag:"a", text:User.Groups[i].Name, href:"#groups#" + User.Groups[i].Id}));
+                }
                 
                 var TabPaneHidden = dom.create(
                             {tag:"div", class:"tab-pane", id:"hidden"});
@@ -274,7 +242,7 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                     {tag:"div",class:"well"});
                 dom.insert(WellHidden,
                     dom.create(
-                        {tag:"p", text:"Skills:"}));
+                        {tag:"p", text:"Здесь будут навыки и подобная, скрытая от посторонних глаз, но игровая, информация:"}));
                 dom.insert(TabPaneHidden,WellHidden);
                 
                 var TabPanePlayer = dom.create(
@@ -288,6 +256,18 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                         Player.Surname + " " +
                         Player.Name + " " +
                         Player.Patronymic}));
+                dom.insert(WellPlayer,
+                    dom.create(
+                        {tag:"p", text:"Ник: " + 
+                        Player.Nick}));
+                dom.insert(WellPlayer,
+                    dom.create(
+                        {tag:"p", text:"Дата рождения: " + 
+                        Player.BirthDate}));
+                dom.insert(WellPlayer,
+                    dom.create(
+                        {tag:"p", text:"Квента: " + 
+                        Player.Quenta}));
                 dom.insert(TabPanePlayer,WellPlayer);
                 // <div class="tab-pane" id="health">
 //                 <div class="well">
