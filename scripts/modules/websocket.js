@@ -2,7 +2,8 @@ define(
     function(){
         var ws = {
             getWebSocket: function (){
-                var WebSocket = document.WebSocket || ws.initWebSocket("ws://109.173.98.148:1991");
+                var WebSocket = document.WebSocket || 
+                        ws.initWebSocket("ws://" + window.location.hostname + ":1991");
                 document.WebSocket = WebSocket;
                 return WebSocket;
             },

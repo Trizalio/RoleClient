@@ -79,10 +79,11 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                 }
 
                 if(window.authDone){
+                    console.log(Path);
                     if (Path.length > 1) {
                         var TargetLocation = Path[1];
                         Path.splice(0, 2);
-                        // console.log(TargetLocation);
+                        console.log(TargetLocation);
                         Handler = buis._handlers[TargetLocation];
                         LocationObject = buis._locations[TargetLocation];
                         if(LocationObject){

@@ -213,26 +213,32 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 dom.insert(TabPaneUser,WellUser);
                 dom.insert(WellUser,
                     dom.create(
-                        {tag:"p", text:"Имя:" + User.Name}));
+                        {tag:"p", text:"Имя: " + User.Name}));
                 dom.insert(WellUser,
                     dom.create(
-                        {tag:"p", text:"Фамилия:" + User.Surname}));
+                        {tag:"p", text:"Фамилия: " + User.Surname}));
                 dom.insert(WellUser,
                     dom.create(
-                        {tag:"p", text:"Отчество:" + User.Patronymic}));
+                        {tag:"p", text:"Отчество: " + User.Patronymic}));
                 dom.insert(WellUser,
                     dom.create(
-                        {tag:"p", text:"Специальность:" + User.Profession}));
+                        {tag:"p", text:"Специальность: " + User.Profession}));
                 dom.insert(WellUser,
                     dom.create(
-                        {tag:"p", text:"Характеристика:" + User.Description}));
+                        {tag:"p", text:"Характеристика: " + User.Description}));
                 var GroupsListDOMO = dom.create(
-                        {tag:"p", text:"Состоит в группах:"});
+                        {tag:"p", text:"Состоит в группах: "});
                 dom.insert(WellUser, GroupsListDOMO);
                 for (var i = 0; i < User.Groups.length; ++i) {
+                    if( i > 0){
+                        dom.insert(GroupsListDOMO,
+                            dom.create(
+                                {tag:"no", 
+                                text:", "}));
+                    }
                     dom.insert(GroupsListDOMO,
                         dom.create(
-                            {tag:"a", text:User.Groups[i].Name, href:"#groups#" + User.Groups[i].Id}));
+                            {tag:"a", text:User.Groups[i].Name, href:"#projects#" + User.Groups[i].Id}));
                 }
                 
                 var TabPaneHidden = dom.create(
