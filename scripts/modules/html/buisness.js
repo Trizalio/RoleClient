@@ -3,8 +3,9 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
     "modules/html/locations/private",
     "modules/html/locations/messages",
     "modules/html/locations/projects",
-    "modules/html/locations/people"],
-    function(dom, btsp, ws, login, priv, mes, proj, peop){
+    "modules/html/locations/people",
+    "modules/html/locations/news"],
+    function(dom, btsp, ws, login, priv, mes, proj, peop, news){
         var buis = {
             ////////////////////////////////
             /// TODO WEBSOCKET RECONNECT ///
@@ -117,7 +118,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                 window.onhashchange = buis.processHash;
                 // TODO: get hash and navigate there
                 btsp.initHideButton();
-                buis.addDefaultLocation("База", "home", priv);
+                buis.addDefaultLocation("База", "news", news);
                 buis.addLocation("Проекты", "projects", proj);
                 buis.addLocation("Люди", "people", peop);
                 buis.addLocation("Сообщения", "messages", mes);
