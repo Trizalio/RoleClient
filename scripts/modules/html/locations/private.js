@@ -34,7 +34,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                 var WebSocket = ws.getWebSocket();
                 WebSocket.send("post logout");
                 WebSocket.handle("logout ok", function(){
-                    window.authDone = false;
+                    window.auth = {};
                     window.location.hash = "#login";
                 });
             },

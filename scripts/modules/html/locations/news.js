@@ -96,6 +96,10 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                         {tag:"a", 
                         text:News.Group.Name,
                         href:"#projects#" + News.Group.Id}));
+                dom.insert(Users,
+                    dom.create(
+                        {tag:"no", 
+                        text:" в: " + News.Datetime}));
 
                 /*console.log(User);
                 var WellUser = dom.insert(

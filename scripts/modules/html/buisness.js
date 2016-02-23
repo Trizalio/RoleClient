@@ -79,7 +79,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                     }
                 }
 
-                if(window.authDone){
+                if(window.auth && window.auth.done){
                     console.log(Path);
                     if (Path.length > 1) {
                         var TargetLocation = Path[1];
@@ -104,6 +104,10 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                     // console.log(Handler);
                     btsp.clean(Container);
                     btsp.deleteAlerts();
+                    if(window.auth && window.auth.data == "admin"){
+                    btsp.createAlert("warning", "#НЕ ИГРА# Вы авторизованы как администратор. ", 
+                        "Если Вы не заходили под администратором, пожалуйста, свяжитесь с МГ. И помните, большая сила - большая ответственность.");
+                    }
                     Handler.show(Container, Path);
                 } else {
                     window.location.hash = "";

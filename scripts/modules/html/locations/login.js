@@ -10,8 +10,11 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
 
                 var WebSocket = ws.getWebSocket();
                 // WebSocket.send("get map");
-                WebSocket.handle("login ok", function(){
-                    window.authDone = true;
+                WebSocket.handle("login ok", function(data){
+                    console.log(data);
+                    window.auth = {};
+                    window.auth.data = data;
+                    window.auth.done = true;
                     window.location.hash = "";
                 });
                 WebSocket.handle("login fail", function(){
@@ -23,7 +26,8 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
                     /// TODO work around server fails
                     function(a, b){WebSocket.send("post login " + a + " " + cryp.hash(b));}, 
                     function(){window.location.hash = "";
-                    window.authDone = true;}));
+                    window.auth = {};
+                    window.auth.done = true;}));
             },
         };
         return login;
