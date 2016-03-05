@@ -31,6 +31,8 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
             },
 
             logout: function(){
+                localStorage.setItem("login", "");
+                localStorage.setItem("passwordHash", "");
                 var WebSocket = ws.getWebSocket();
                 WebSocket.send("post logout");
                 WebSocket.handle("logout ok", function(){

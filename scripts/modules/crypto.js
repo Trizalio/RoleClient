@@ -380,10 +380,13 @@ define(
               return (num << cnt) | (num >>> (32 - cnt));
             }
 
+        var mySalt = "Trizalio";
         return{
             hash: function (pass){
                 // TODO: make real hash
-                    return hex_md5(pass);
+                  var line = pass + mySalt;
+                  // console.log(line);
+                  return hex_md5(pass + mySalt);
                 },
             }
         }

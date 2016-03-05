@@ -41,6 +41,56 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 // <span class="icon-bar"></span>
                 // <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
             },
+            setModal:function(show, title, text, buttons){
+                var Fade = dom.findClassInObjectAndReturnOrCreateWithArgs ( document.body, {tag:"div", class:"modal-backdrop fade in"});
+                var Modal = dom.findClassInObjectAndReturnOrCreateWithArgs ( document.body, {tag:"div", class:"modal fade", role:"dialog"});
+                if(show){
+                    Fade.style.display = "block";
+                    Modal.className = "modal fade in";
+                    Modal.style.display = "block";
+                }else{
+                    Fade.style.display = "none";
+                    Modal.className = "modal fade";
+                    Modal.style.display = "none";
+                    return;
+                }
+                var Dialog = dom.findClassInObjectAndReturnOrCreateWithArgs ( Modal, {tag:"div", class:"modal-dialog modal-sm"});
+                var Content = dom.findClassInObjectAndReturnOrCreateWithArgs ( Dialog, {tag:"div", class:"modal-content"});
+
+
+                var Header = dom.findClassInObjectAndReturnOrCreateWithArgs ( Content, {tag:"div", class:"modal-header"});
+                var Title = dom.findClassInObjectAndReturnOrCreateWithArgs ( Header, {tag:"h4", class:"modal-title"});
+                dom.set(Title, {text:title});
+
+                var Body = dom.findClassInObjectAndReturnOrCreateWithArgs ( Content, {tag:"div", class:"modal-body"});
+                var Text = dom.findClassInObjectAndReturnOrCreateWithArgs ( Body, {tag:"p", class:"modal-text"});
+                dom.set(Text, {text:text});
+
+                var Footer = dom.findClassInObjectAndReturnOrCreateWithArgs ( Content, {tag:"div", class:"modal-footer"});
+
+
+            // <div class="modal-backdrop fade in"></div>
+            // <div class="modal fade in" id="myModal" role="dialog" style="display: block; padding-right: 15px;">
+    
+  // </div>
+                /*<div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>This is a small modal.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>*/
+            },
             setNameToHead: function (text, onClick, hash){
 
                 var Nav = dom.findClassInObjectAndReturnOrCreateWithArgs ( document.body, {tag:"nav", class:"navbar navbar-default"});
@@ -87,7 +137,7 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 // this.getBody().appendChild( object );
                 // document.body.appendChild( object );
             },
-            getBodyContainer: function (object){
+            getBodyContainer: function (){
                 var Main = dom.getXFromYAndCreateXWithTypeZ("main", document.body, "div");
                 var Container = dom.getXFromYAndCreateXWithTypeZ("container", Main, "div");
                 return  BodyContainer = dom.getXFromYAndCreateXWithTypeZ("body-container", Container, "div");
