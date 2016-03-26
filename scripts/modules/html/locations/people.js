@@ -1,5 +1,5 @@
-define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
-    function(dom, btsp, ws){
+define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modules/crypto"],
+    function(dom, btsp, ws, cryp){
         console.log(WebSocket);
         var priv = {
             show: function (Container, Path){
@@ -483,6 +483,89 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                         )
                     );
                     dom.insert(Container,AdminPanel);
+
+                    var AdminPanel2 = dom.create
+                    (
+                        {
+                            tag:"div",
+                            // class:"well well-sm",
+                            class:"btn-toolbar"
+                        }
+                    );
+                    dom.insert(AdminPanel2, 
+                        dom.create
+                        (
+                            {
+                                tag:"button", 
+                                text:"Задать логин/пароль",
+                                class:"btn btn-info btn-sm",
+                                onclick:function(){
+                                    var inputLoginObj = document.getElementById("inputLogin");
+                                    var inputPasswordObj = document.getElementById("inputPassword");
+                                    var credentialAcceptObj = document.getElementById("credentialAccept");
+                                    console.log(inputLoginObj);
+                                    console.log(inputPasswordObj);
+                                    console.log(credentialAcceptObj);
+                                    if(inputLoginObj && inputPasswordObj && credentialAcceptObj){
+                                        inputLoginObj.className = "";
+                                        inputPasswordObj.className = "";
+                                        credentialAcceptObj.className = "btn btn-success btn-sm";
+                                    }
+                                }
+                            }
+                        )
+                    );
+                    dom.insert(AdminPanel2, 
+                        dom.create
+                        (
+                            {
+                                id:"credentialAccept", 
+                                tag:"button", 
+                                text:"Принять",
+                                class:"btn btn-success btn-sm hidden",
+                                onclick:function(){
+                                    var inputLoginObj = document.getElementById("inputLogin");
+                                    var inputPasswordObj = document.getElementById("inputPassword");
+                                    if(inputLoginObj && inputPasswordObj){
+                                        priv.sendCredentialsChange(inputLoginObj.value, 
+                                            inputPasswordObj.value, 
+                                            Player.Id);
+                                    }else{
+                                        console.log("internal error");
+                                    }
+                                    document.getElementById("credentialAccept").className 
+                                                = "btn btn-success btn-sm hidden";
+                                    inputLoginObj.className = "hidden";
+                                    inputPasswordObj.className = "hidden";
+                                }
+                            }
+                        )
+                    );
+                    dom.insert(AdminPanel2, 
+                        dom.create
+                        (
+                            {
+                                id:"inputLogin", 
+                                tag:"input", 
+                                type:"text", 
+                                placeholder:"Логин",
+                                class:"hidden",
+                            }
+                        )
+                    );
+                    dom.insert(AdminPanel2, 
+                        dom.create
+                        (
+                            {
+                                id:"inputPassword", 
+                                tag:"input", 
+                                type:"text", 
+                                placeholder:"Пароль",
+                                class:"hidden",
+                            }
+                        )
+                    );
+                    dom.insert(Container,AdminPanel2);
                 }
 
                 dom.insert(Container,Jumbotron);
@@ -695,6 +778,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                             }
                         )
                     );
+                    
                     dom.insert(AdminPanel, 
                         dom.create
                         (
@@ -1207,6 +1291,35 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                     console.log("internalError");
                 }
             },*/
+            sendCredentialsChange: function (Login, Password, PlayerId){
+                var WebSocket = ws.getWebSocket();
+                var Credential = {"PlayerId":PlayerId, "Login":Login, "Password":cryp.hash(Password)};
+                console.log(Credential);
+                WebSocket.send("post credential set " + JSON.stringify(Credential));
+
+                WebSocket.handle("credential updated", function(Data){
+                        btsp.createAlert("success", "Логин и пароль успешно изменены", 
+                        "Поздравляю!");
+                        // window.auth.data = "";
+                        // window.location.hash = "";
+                    }
+                );
+                WebSocket.handle("not allowed", function(Data){
+                    btsp.createAlert("danger", "Не удалось изменить логин/пароль. ", 
+                        "Недостаточно прав. Если Вы не пытались ничего хакнуть, пожалуйста, свяжитесь с МГ");
+                    }
+                );
+                WebSocket.handle("no player", function(Data){
+                    btsp.createAlert("danger", "Не удалось найти персонажа, за которого Вы хотите зайти. ", 
+                        "Если Вы не пытались ничего хакнуть, пожалуйста, свяжитесь с МГ");
+                    }
+                );
+                WebSocket.handle("credential manage fail", function(Data){
+                    btsp.createAlert("danger", "Не удалось изменить логин/пароль. ", 
+                        Data);
+                    }
+                );
+            },
             sendLogas: function (Player){
                 var WebSocket = ws.getWebSocket();
                 WebSocket.send("post logas " + Player.Id);
@@ -1234,7 +1347,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                 );
                 WebSocket.handle("logas admin", function(Data){
                     btsp.createAlert("danger", "Заходить за других админов запрещено. ", 
-                        Data);
+                        "");
                     }
                 );
             },
