@@ -76,7 +76,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                         dom.create(
                             {tag:"a", 
                             text:Group.Users[i].Name + " " + Group.Users[i].Surname + " " + Group.Users[i].Patronymic, 
-                            href:"#people#" + Group.Users[i].Id}));
+                            href:"#people#user#" + Group.Users[i].Id}));
                 }
             },
         };

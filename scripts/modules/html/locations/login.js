@@ -38,16 +38,25 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
                 WebSocket.handle("login fail", function(){
                     btsp.createAlert("danger", "Авторизация не удалась: ", "неправильная пара логин, пароль.");
                 });
-                btsp.addToBody(btsp.getAuthForm(
-                    /// TODO add button spam blocker and request sended display object
-                    /// TODO work around server fails
-                    function(login, password){
-                        saveAuth(login, password);
-                        sendAuth();
-                    }, 
-                    function(){window.location.hash = "";
-                    window.auth = {};
-                    window.auth.done = true;}));
+                btsp.addToBody
+                (
+                    btsp.getAuthForm
+                    (
+                        /// TODO add button spam blocker and request sended display object
+                        /// TODO work around server fails
+                        function(login, password)
+                        {
+                            saveAuth(login, password);
+                            sendAuth();
+                        }, 
+                        function()
+                        {
+                            window.location.hash = "";
+                            window.auth = {};
+                            window.auth.done = true;
+                        }
+                    )
+                );
             },
         };
         return login;

@@ -85,7 +85,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                         dom.create(
                             {tag:"a", 
                             text:News.Author.Name + " " + News.Author.Surname + " " + News.Author.Patronymic + " ", 
-                            href:"#people#" + News.Author.Id}));
+                            href:"#people#user#" + News.Author.Id}));
                 }
                 dom.insert(Users,
                     dom.create(
@@ -118,7 +118,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                                 User.Name + " " + 
                                 User.Patronymic + ", " + 
                                 User.Profession,
-                            href:"#people#" + User.Id
+                            href:"#people#user#" + User.Id
                         }
                     )
                 );

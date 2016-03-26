@@ -10,6 +10,19 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
             ////////////////////////////////
             /// TODO WEBSOCKET RECONNECT ///
             ////////////////////////////////
+            addChildLocation: function(Address, ParentAddress, Handler){
+                if(!buis._handlers){
+                    console.error("buis._handlers is undefined");
+                    return;
+                }
+                buis._handlers[Address] = Handler;
+
+                if(!buis._locations){
+                    console.error("buis._locations is undefined");
+                    return;
+                }
+                buis._locations[Address] = buis._locations[ParentAddress];
+            },
             addLocation: function(Name, Address, Handler){
                 // console.log(buis);
                 if(!buis._handlers){
@@ -125,6 +138,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                 buis.addDefaultLocation("База", "news", news);
                 buis.addLocation("Проекты", "projects", proj);
                 buis.addLocation("Люди", "people", peop);
+                // buis.addChildLocation("player", "people", peop);
                 buis.addLocation("Сообщения", "messages", mes);
                 buis.addLocation("Мой профиль", "private", priv);
                 // buis.addLocation("Выход", "exit", {show:function(){

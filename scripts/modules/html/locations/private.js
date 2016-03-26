@@ -5,7 +5,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                 var WebSocket = ws.getWebSocket();
                 var Player;
                 WebSocket.send("get player");
-                WebSocket.handle("player data", function(Data){
+                WebSocket.handle("self data", function(Data){
                     Player = jQuery.parseJSON(Data);
                     console.log(Player);
                     WebSocket.send("get user " + Player.UserId);
