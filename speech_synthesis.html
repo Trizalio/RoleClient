@@ -8,17 +8,23 @@
         
         <script>
             function read() {
-                //alert("event got");
-                console.log("event got");
-                console.log($("#input_text").val());
                 var msg = new SpeechSynthesisUtterance($("#input_text").val());
-                console.log(msg);
-                console.log(speechSynthesis.getVoices());
-                speechSynthesis.getVoices().forEach(function(voice) {
-                  console.log(voice.name, voice.lang, voice.default ? '(default)' :'');
-                });
+                msg.voice = window.speechSynthesis.getVoices()[16];
                 msg.lang = 'ru-RU';
                 window.speechSynthesis.speak(msg);
+                // //alert("event got");
+                // console.log("event got");
+                // console.log($("#input_text").val());
+                // var msg = new SpeechSynthesisUtterance($("#input_text").val());
+                // msg.voice = window.speechSynthesis.getVoices()[16];
+                // console.log(msg);
+                // console.log(speechSynthesis.getVoices());
+                // console.log(speechSynthesis.getVoices());
+                // speechSynthesis.getVoices().forEach(function(voice) {
+                //   console.log(voice.name, voice.lang, voice.default ? '(default)' :'');
+                // });
+                // msg.lang = 'ru-RU';
+                // window.speechSynthesis.speak(msg);
             }
         </script>    
     </head>

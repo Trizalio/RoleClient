@@ -1,5 +1,5 @@
-define(["modules/html/buisness", "modules/canvas", "modules/map", "modules/websocket", "libs/jquery-2.1.4"],
-    function(buis, canv, map, ws, $){
+define(["modules/html/buisness", "modules/canvas", "modules/map", "modules/websocket"],
+    function(buis, canv, map, ws){
         buis.processHash();
         // buis.init();
         // var Button = dom.createButton("buttonl1", function(){alert("ok1");});

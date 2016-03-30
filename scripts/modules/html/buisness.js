@@ -4,8 +4,11 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
     "modules/html/locations/messages",
     "modules/html/locations/projects",
     "modules/html/locations/people",
-    "modules/html/locations/news"],
-    function(dom, btsp, ws, login, priv, mes, proj, peop, news){
+    "modules/html/locations/news",
+    "modules/html/locations/qrpage",
+    "modules/html/audio"],
+    function(dom, btsp, ws, login, priv, mes, proj, peop, news, qrp, audi){
+        audi.speak("Соединение установлено");
         var buis = {
             ////////////////////////////////
             /// TODO WEBSOCKET RECONNECT ///
@@ -136,6 +139,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                 // TODO: get hash and navigate there
                 btsp.initHideButton();
                 buis.addDefaultLocation("База", "news", news);
+                buis.addLocation("Воздействия", "qrpage", qrp);
                 buis.addLocation("Проекты", "projects", proj);
                 buis.addLocation("Люди", "people", peop);
                 // buis.addChildLocation("player", "people", peop);

@@ -1,5 +1,5 @@
-define(["modules/canvas", "libs/jquery-2.1.4"],
-    function(Canv, $){
+define(["modules/canvas"],
+    function(Canv){
         var Module = {
 
             // MAP_WIDTH : 62.83185307179586,//64

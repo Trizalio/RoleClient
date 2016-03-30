@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <title>Qr test</title>
-        <script type="text/javascript" charset="utf-8" src="jquery-2.1.4.js"></script>
+        <!-- // <script type="text/javascript" charset="utf-8" src="jquery-2.1.4.js"></script> -->
 
         <script type="text/javascript" src="jsqrcode/src/grid.js"></script>
         <script type="text/javascript" src="jsqrcode/src/version.js"></script>
@@ -33,22 +33,22 @@
         
         <script>
             qrcode.callback = decodedQR;
-            var desiredWidth;
-            $(document).ready(function() {
-                console.log('onReady');
-                $("#takePictureField").on("change",gotPic);
-                desiredWidth = window.innerWidth;
+            // var desiredWidth;
+            window.onload = function() {
+                // console.log('onReady');
+                document.getElementById("takePictureField").onchange=(gotPic);
+                // desiredWidth = window.innerWidth;
                 
-                if(!("url" in window) && ("webkitURL" in window)) {
-                    window.URL = window.webkitURL;   
-                }
+                // if(!("url" in window) && ("webkitURL" in window)) {
+                //     window.URL = window.webkitURL;   
+                // }
                 
-            });
+            };
             
             //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
             function gotPic(event) {
                 //alert("event got");
-                //console.log("event got");
+                // console.log("event got");
                 if(event.target.files.length == 1 && 
                    event.target.files[0].type.indexOf("image/") == 0) {
                     qrcode.decode(URL.createObjectURL(event.target.files[0]));
@@ -56,8 +56,8 @@
                 }
             }
             function decodedQR(data) {
-                console.log(data);
-                $("#qr-text").text( data );
+                console.log("decoded", data);
+                document.getElementById("qr-text").innerHTML = ( data );
             }
         
         
