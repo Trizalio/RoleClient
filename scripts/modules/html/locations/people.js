@@ -4,6 +4,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
         var priv = {
             show: function (Container, Path){
                 var WebSocket = ws.getWebSocket();
+                window.CurrentLocation = "people";
                 if(Path.length == 0)
                 {
                 // btsp.createAlert("info", "Раздел в разработке. ", "Здесь будет отображатся список всего персонала");
@@ -844,6 +845,20 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
                         {id:"inputPatronymic",tag:"text", text:User.Patronymic}));
                 dom.insert(Jumbotron,PatronymicGroup);
 
+                var MaleGroup = dom.create(
+                    {tag:"p"}
+                )
+                dom.insert(MaleGroup, dom.create(
+                        {tag:"b", text:"Пол: "}));
+                var Gender = "жен.";
+                if(User.Male)
+                {
+                    Gender = "муж.";
+                }
+                dom.insert(MaleGroup, dom.create(
+                        {id:"inputGender",tag:"text", text:Gender}));
+                dom.insert(Jumbotron,MaleGroup);
+
                 var BirthDateGroup = dom.create(
                     {tag:"p"}
                 )
@@ -853,11 +868,20 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
                         {id:"inputBirthDate",tag:"text", text:User.BirthDate}));
                 dom.insert(Jumbotron,BirthDateGroup);
 
+                var SpecialtyGroup = dom.create(
+                    {tag:"p"}
+                )
+                dom.insert(SpecialtyGroup, dom.create(
+                        {tag:"b", text:"Специальность: "}));
+                dom.insert(SpecialtyGroup, dom.create(
+                        {id:"inputSpecialty",tag:"text", text:User.Specialty}));
+                dom.insert(Jumbotron,SpecialtyGroup);
+
                 var ProfessionGroup = dom.create(
                     {tag:"p"}
                 )
                 dom.insert(ProfessionGroup, dom.create(
-                        {tag:"b", text:"Специальность: "}));
+                        {tag:"b", text:"Профессия: "}));
                 dom.insert(ProfessionGroup, dom.create(
                         {id:"inputProfession",tag:"text", text:User.Profession}));
                 dom.insert(Jumbotron,ProfessionGroup);
@@ -866,7 +890,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
                     {tag:"p"}
                 )
                 dom.insert(DescriptionGroup, dom.create(
-                        {tag:"b", text:"Статус: "}));
+                        {tag:"b", text:"Интересы: "}));
                 dom.insert(DescriptionGroup, dom.create(
                         {id:"inputDescription",tag:"text", text:User.Description}));
                 dom.insert(Jumbotron,DescriptionGroup);

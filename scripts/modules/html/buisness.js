@@ -6,8 +6,9 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
     "modules/html/locations/people",
     "modules/html/locations/news",
     "modules/html/locations/qrpage",
+    "modules/html/locations/status",
     "modules/html/audio"],
-    function(dom, btsp, ws, login, priv, mes, proj, peop, news, qrp, audi){
+    function(dom, btsp, ws, login, priv, mes, proj, peop, news, qrp, stat, audi){
         audi.speak("Соединение установлено");
         var buis = {
             ////////////////////////////////
@@ -44,7 +45,10 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                 // console.log(buis);
                 buis._defaultHandler = Handler;
                 // console.log(buis._defaultHandler);  
-                btsp.setNameToHead(Name, buis.authFail, "#");
+                btsp.setNameToHead(Name, buis.authFail, "#" + Address);
+
+
+                // btsp.addExpButton(Name, buis.authFail, "test");
             },
             addLoginLocation: function(Handler){
                 // console.log(buis);
@@ -138,7 +142,9 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                 window.onhashchange = buis.processHash;
                 // TODO: get hash and navigate there
                 btsp.initHideButton();
-                buis.addDefaultLocation("База", "news", news);
+                buis.addDefaultLocation("База", "status", stat);
+                buis.addLocation("Лента", "news", news);
+                buis.addLocation("Статус", "status", stat);
                 buis.addLocation("Воздействия", "qrpage", qrp);
                 buis.addLocation("Проекты", "projects", proj);
                 buis.addLocation("Люди", "people", peop);

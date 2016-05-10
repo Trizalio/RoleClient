@@ -2,6 +2,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
     function(dom, btsp, ws){
         var priv = {
             show: function (Container, Path){
+                window.CurrentLocation = "projects";
                 if(Path.length == 0)
                 {
                     // btsp.createAlert("info", "Раздел в разработке. ", "Здесь будут отображатся все проекты");

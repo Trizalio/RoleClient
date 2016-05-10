@@ -62,6 +62,9 @@ define(
             insert: function (outer, inner){
                 outer.appendChild(inner);
                 return outer;
+            },
+            findId: function (findId){
+                return window.document.getElementById(findId);
             }
         }
     }

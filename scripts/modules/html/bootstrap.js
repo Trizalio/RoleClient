@@ -41,6 +41,68 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 // <span class="icon-bar"></span>
                 // <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
             },
+            addExpButton: function(text, onClick, hash){
+                var Nav = dom.findClassInObjectAndReturnOrCreateWithArgs ( document.body, {tag:"nav", class:"navbar navbar-default"});
+                var Container = dom.findClassInObjectAndReturnOrCreateWithArgs ( Nav, {tag:"div", class:"container"});
+                var Head = dom.findClassInObjectAndReturnOrCreateWithArgs ( Container, {tag:"div", class:"navbar-header"});
+                var HideButton = dom.create (
+                    {
+                        tag:"button", 
+                        type:"button", 
+                        // text:"+", 
+                        class:"navbar-toggle collapsed", 
+                        // "data-toggle":"collapse", 
+                        // "data-target":"#navbar"+hash, 
+                        // "aria-expanded":"false", 
+                        // "aria-controls":"navbar"
+                    }
+                );
+                dom.insert(Head, HideButton);
+                
+                var Hint = dom.findClassInObjectAndReturnOrCreateWithArgs ( HideButton, 
+                    {
+                        tag:"span", 
+                        class:"sr-only", 
+                        text:text
+                    }
+                );
+
+                // var Collapse = dom.create ({tag:"div", class:"navbar-collapse collapse nothing", id:"navbar" + hash});
+                // dom.insert(Container, Collapse);
+                // var Right = dom.create ({tag:"ul", class:"nav navbar-nav navbar-right"});
+                // dom.insert(Collapse, Right);
+            
+                // // return;
+
+
+                // var tmp =  dom.create({tag:"li",role:"presentation"});
+
+                // Right.appendChild
+                // ( 
+                //     dom.insert(
+                //         tmp,
+                //         dom.create(
+                //             {tag:"a", href:hash,text:text,onclick:onClick}
+                //         )
+                //     )
+                // );
+                // return tmp;
+                // dom.insert(HideButton, dom.create({
+                //         tag:"span", 
+                //         class:"icon-bar"
+                //     }));
+                // dom.insert(HideButton, dom.create({
+                //         tag:"span", 
+                //         class:"icon-bar"
+                //     }));
+                dom.insert(HideButton, dom.create({
+                        tag:"span", 
+                        class:"glyphicon glyphicon-heart"
+                    }));
+                // <span class="sr-only">Toggle navigation</span>
+                // <span class="icon-bar"></span>
+                // <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            },
             setModal:function(show, title, text, buttons){
                 var Fade = dom.findClassInObjectAndReturnOrCreateWithArgs ( document.body, {tag:"div", class:"modal-backdrop fade in"});
                 var Modal = dom.findClassInObjectAndReturnOrCreateWithArgs ( document.body, {tag:"div", class:"modal fade", role:"dialog"});
@@ -270,12 +332,23 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 dom.insert(WellUser,
                     dom.create(
                         {tag:"p", text:"Отчество: " + User.Patronymic}));
+                var Gender = "жен.";
+                if(User.Male)
+                {
+                    Gender = "муж.";
+                }
                 dom.insert(WellUser,
                     dom.create(
-                        {tag:"p", text:"Специальность: " + User.Profession}));
+                        {tag:"p", text:"Пол: " + Gender}));
                 dom.insert(WellUser,
                     dom.create(
-                        {tag:"p", text:"Характеристика: " + User.Description}));
+                        {tag:"p", text:"Специальность: " + User.Specialty}));
+                dom.insert(WellUser,
+                    dom.create(
+                        {tag:"p", text:"Профессия: " + User.Profession}));
+                dom.insert(WellUser,
+                    dom.create(
+                        {tag:"p", text:"Интересы: " + User.Description}));
                 var GroupsListDOMO = dom.create(
                         {tag:"p", text:"Состоит в группах: "});
                 dom.insert(WellUser, GroupsListDOMO);

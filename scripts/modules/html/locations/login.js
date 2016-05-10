@@ -20,6 +20,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket", "modu
 
         var login = {
             show: function (Container){
+                window.CurrentLocation = "login";
                 sendAuth();
                 // btsp.clean(Container);
                 // TODO: get hash and navigate there

@@ -2,6 +2,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
     function(dom, btsp, ws){
         var priv = {
             show: function (Container){
+                window.CurrentLocation = "messages";
                 btsp.createAlert("info", "Раздел в разработке. ", "Здесь будут отображатся сообщения другим пользователям");
                 // var WebSocket = ws.getWebSocket();
                 // var Player;

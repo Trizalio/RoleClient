@@ -4,6 +4,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
         var qrp = {
             show: function (Container, Path){
                 console.log(Path);
+                window.CurrentLocation = "qrpage";
                 qrpContainer = Container;
 
                 qrcode.callback = qrp.decodedQR;
@@ -36,6 +37,28 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                         }
                     )
                 );
+                dom.insert(Panel,
+                    dom.create
+                    (
+                        {
+                            tag:"button", 
+                            text:"Считать код",
+                            class:"btn btn-default",
+                            onclick:qrp.manualRead
+                        }
+                    )
+                );
+                dom.insert(Panel,
+                    dom.create
+                    (
+                        {
+                            id:"inputCode",
+                            tag:"input", 
+                            type:"text", 
+                            placeholder:"Код"
+                        }
+                    )
+                );
 
                 var qrOutput = dom.create(
                     {tag:"div"});
@@ -47,7 +70,28 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
 
 
 
+                WebSocket.handle("qr recognised", function(Data){
+                    var qrData = jQuery.parseJSON(Data);
+                    console.log(qrData);
+                    qrp.renderRecognisedQR(qrpContainer, qrData);
+                }
+                );
 
+                WebSocket.handle("qr unrecognised", function(Data){
+                    btsp.createAlert("danger", "Этот QR код ничему не соответствует. ", 
+                        "");
+                    }
+                );
+                WebSocket.handle("qr close", function(Data){
+                        var controller = dom.findId("qrController");
+                        console.log(controller);
+                        if(controller)
+                        {
+                            btsp.clean(Container);
+                            qrp.show(Container, Path);
+                        }
+                    }
+                );
 
                 // WebSocket.send("get qr");
                 WebSocket.handle("qr data", function(Data){
@@ -55,6 +99,29 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                     var Qr = jQuery.parseJSON(Data);
                     qrp.renderQr(qrOutput, Qr);
                 });
+            },
+
+            manualRead: function (){
+                console.log("manualRead");
+                var inputCodeObj = document.getElementById("inputCode");
+                if(inputCodeObj ){
+                    var Code = inputCodeObj.value;
+
+                    var fail = false;
+                    if(!Code){
+                        inputCodeObj.style["background-color"] = "#FFCCCC";
+                        fail = true;
+                    }else{
+                        inputCodeObj.style["background-color"] = "#FFFFFF";
+                    }
+
+                    if(!fail)
+                    {
+                        qrp.decodedQR(Code);
+                    }
+                }else{
+                    console.log("internalError");
+                }
             },
             gotPic: function (event) {
                 // alert("event got");
@@ -71,18 +138,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                 var WebSocket = ws.getWebSocket();
                 WebSocket.send("get qr " + data);
 
-                WebSocket.handle("qr recognised", function(Data){
-                    var qrData = jQuery.parseJSON(Data);
-                    console.log(qrData);
-                    qrp.renderRecognisedQR(qrpContainer, qrData);
-                }
-                );
 
-                WebSocket.handle("qr unrecognised", function(Data){
-                    btsp.createAlert("danger", "Этот QR код ничему не соответствует. ", 
-                        "");
-                    }
-                );
                 // alert(1);
                 // document.getElementById("qr-text").innerHTML = ( data );
             },
@@ -92,7 +148,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                 console.log(Container);
 
                 var Jumbotron = dom.create(
-                    {tag:"div",class:"jumbotron col-lg-12",role:"presentation"});
+                    {tag:"div",class:"jumbotron col-lg-12",role:"presentation", id:"qrController"});
                 dom.insert(Container, Jumbotron);
                 dom.insert(Jumbotron,
                     dom.create(
@@ -207,6 +263,19 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                 var t1 = $(Container);
                 var t2 = t1.empty();
                 var t3 = t2.qrcode(options);
+
+                dom.insert(Container,
+                    dom.create
+                    (
+                        {
+                            tag:"h1", 
+                            text:Qr.value,
+                            // class:"btn btn-default",
+                        }
+                    )
+                );
+
+                
             },
         };
         return qrp;

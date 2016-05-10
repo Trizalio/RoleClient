@@ -2,6 +2,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
     function(dom, btsp, ws){
         var priv = {
             show: function (Container){
+                window.CurrentLocation = "private";
                 var WebSocket = ws.getWebSocket();
                 var Player;
                 WebSocket.send("get player");

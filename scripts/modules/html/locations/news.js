@@ -3,6 +3,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
         var news = {
             show: function (Container, Path){
                 console.log(Path);
+                window.CurrentLocation = "news";
                 // if(Path.length == 0)
                 // {
                 // btsp.createAlert("info", "Раздел в разработке. ", "Здесь будет отображатся список всего персонала");
