@@ -1,14 +1,15 @@
 define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
     "modules/html/locations/login",
-    "modules/html/locations/private",
+    "modules/html/locations/private2",
     "modules/html/locations/messages",
     "modules/html/locations/projects",
     "modules/html/locations/people",
     "modules/html/locations/news",
     "modules/html/locations/qrpage",
     "modules/html/locations/status",
+    "modules/html/locations/exit",
     "modules/html/audio"],
-    function(dom, btsp, ws, login, priv, mes, proj, peop, news, qrp, stat, audi){
+    function(dom, btsp, ws, login, priv, mes, proj, peop, news, qrp, stat, exit, audi){
         audi.speak("Соединение установлено");
         var buis = {
             ////////////////////////////////
@@ -149,8 +150,9 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket",
                 buis.addLocation("Проекты", "projects", proj);
                 buis.addLocation("Люди", "people", peop);
                 // buis.addChildLocation("player", "people", peop);
-                buis.addLocation("Сообщения", "messages", mes);
-                buis.addLocation("Мой профиль", "private", priv);
+                // buis.addLocation("Сообщения", "messages", mes);
+                buis.addLocation("Профиль", "private", priv);
+                buis.addLocation("Выход", "exit", exit);
                 // buis.addLocation("Выход", "exit", {show:function(){
                 //     window.location.hash = "login";
                 //     window.authDone = false;}});

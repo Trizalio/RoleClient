@@ -325,13 +325,13 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                 dom.insert(TabPaneUser,WellUser);
                 dom.insert(WellUser,
                     dom.create(
-                        {tag:"p", text:"Имя: " + User.Name}));
-                dom.insert(WellUser,
-                    dom.create(
-                        {tag:"p", text:"Фамилия: " + User.Surname}));
-                dom.insert(WellUser,
-                    dom.create(
-                        {tag:"p", text:"Отчество: " + User.Patronymic}));
+                        {tag:"p", text:"Имя: " + User.Name + " " + User.Surname + " " + User.Patronymic}));
+                // dom.insert(WellUser,
+                //     dom.create(
+                //         {tag:"p", text:"Фамилия: " + User.Surname}));
+                // dom.insert(WellUser,
+                //     dom.create(
+                //         {tag:"p", text:"Отчество: " + User.Patronymic}));
                 var Gender = "жен.";
                 if(User.Male)
                 {
@@ -467,26 +467,124 @@ define(["modules/html/dom", "modules/html/bootstrap_init"],
                         })));
                 return Jumbotron;
             },
-            // genetateBlock: function(title, text, date, ){
 
-            //     dom.create
-            //     (
-            //         {tag:"div",class:"jumbotron",role:"presentation"}
-            //     )
-            //     var Jumbotron = document.createElement("div");
-            //     Jumbotron.className = "jumbotron col-lg-7";
-            //     var Header = document.createElement("h1");
-            //     Header.innerHTML = HeaderText;
-            //     Jumbotron.appendChild( Header );
-            //     var Body = document.createElement("p");
-            //     Body.innerHTML = BodyText;
-            //     Body.className = "lead";
-            //     Jumbotron.appendChild( Body );
-            //     if(!!ContentObject) {
-            //         Jumbotron.appendChild( ContentObject );
-            //     }
-            //     return Jumbotron;
-            // }
+            navTabsNew: function(Container){
+                var Nav = dom.create(
+                    {tag:"ul",class:"nav nav-tabs"});
+                dom.insert(Container, Nav);
+
+                var TabContent = dom.create(
+                            {tag:"div", class:"tab-content"});
+                dom.insert(Container,TabContent);
+                return {nav:Nav, content:TabContent};
+            },
+
+            navTabsAdd: function(NavTabs, Object, Name, Description, Active){
+                var Nav = NavTabs.nav;
+                var TabContent = NavTabs.content;
+
+                var ActiveClass = "";
+                if(Active){
+                    ActiveClass = " active";
+                }
+
+                dom.insert(Nav,
+                    dom.insert(
+                        dom.create(
+                            {tag:"li", role:"presentation", class:ActiveClass}),
+                        dom.create(
+                            {tag:"a", "data-toggle":"tab", href:"#" + Name, text:Description})));
+
+                var TabPaneUser = dom.create(
+                            {tag:"div", class:"tab-pane" + ActiveClass, id:Name});
+                dom.insert(TabContent,TabPaneUser);
+                dom.insert(TabPaneUser,Object);
+            },
+
+            tableViewNew: function (){
+                var TableObj = dom.create({tag:"form", class:"form-horizontal"});
+                // TableObj.style.width = "100%";
+                return TableObj;
+            },
+
+            tableViewAppendRow: function(Table, Description, Value, Name, ButtontText, Callback){
+                var FormGroup = dom.create({tag:"div", class:"form-group"});
+
+                var Label = dom.create({tag:"label", class:"col-sm-2 control-label", text:Description});
+                var Div = dom.create({tag:"div", class:"col-sm-8"});
+                var Output = dom.create({tag:"p", class:"form-control-static", id:"Output" + Name, text:Value});
+                var Input = dom.create({tag:"input", class:"form-control", id:"Input" + Name, 
+                    type:"text", placeholder:Description, value:Value});
+                Input.classList.add("hidden");
+
+                dom.insert(Div, Output);
+                dom.insert(Div, Input);
+
+                dom.insert(FormGroup, Label);
+                dom.insert(FormGroup, Div);
+
+                if(ButtontText){
+
+                    var Button = dom.create(
+                        {tag:"button", class:"btn btn-default", type:"button", text:ButtontText, 
+                        onclick:Callback, id:"Button" + Name});
+                    var Span = dom.insert(dom.create({tag:"div", class:"col-sm-2"}), Button);
+                    // var Span = dom.insert(dom.create({tag:"span", class:"input-group-btn"}), Button);
+                    dom.insert(FormGroup, Span);
+                }
+                dom.insert(Table, FormGroup);
+            },
+            tableViewAppendRowObjects: function(Table, Description, Objects, Name, ButtontText, Callback){
+                var FormGroup = dom.create({tag:"div", class:"form-group"});
+
+                var Label = dom.create({tag:"label", class:"col-sm-2 control-label", text:Description});
+                var Div = dom.create({tag:"div", class:"col-sm-8"});
+                var Output = dom.create({tag:"p", class:"form-control-static"});
+                Objects.forEach(function(Entry) {
+                    dom.insert(Output, Entry);
+                });
+                // var Input = dom.create({tag:"input", class:"form-control", id:"Input" + Name, 
+                //     type:"text", placeholder:Description, value:Value});
+                // Input.classList.add("hidden");
+
+                dom.insert(Div, Output);
+
+                dom.insert(FormGroup, Label);
+                dom.insert(FormGroup, Div);
+
+                if(ButtontText){
+
+                    var Button = dom.create(
+                        {tag:"button", class:"btn btn-default", type:"button", text:ButtontText, 
+                        onclick:Callback, id:"Button" + Name});
+                    var Span = dom.insert(dom.create({tag:"div", class:"col-sm-2"}), Button);
+                    // var Span = dom.insert(dom.create({tag:"span", class:"input-group-btn"}), Button);
+                    dom.insert(FormGroup, Span);
+                }
+                dom.insert(Table, FormGroup);
+            },  
+            editTableView: function(Name){
+                var Output = dom.findId("Output" + Name);
+                var Input = dom.findId("Input" + Name);
+
+                Input.value = Output.innerHTML;
+
+                Output.classList.add("hidden");
+                Input.classList.remove("hidden");
+            },
+            saveTableView: function(Name){
+                var Output = dom.findId("Output" + Name);
+                var Input = dom.findId("Input" + Name);
+ 
+                Output.innerHTML = Input.value;
+
+                Input.classList.add("hidden");
+                Output.classList.remove("hidden");
+            },
+            getTableViewButton: function(Name){
+                var Button = dom.findId("Button" + Name);
+                return Button;
+            },
         }
     }
 )
