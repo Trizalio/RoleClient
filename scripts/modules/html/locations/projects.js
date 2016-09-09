@@ -79,6 +79,39 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                             text:Group.Users[i].Name + " " + Group.Users[i].Surname + " " + Group.Users[i].Patronymic, 
                             href:"#people#user#" + Group.Users[i].Id}));
                 }
+
+
+                for (var i = 0; i < Group.News.length; ++i) {
+                    var NewsJumbotron = dom.create(
+                        {tag:"div",class:"jumbotron col-lg-12",role:"presentation"});
+                    dom.insert(Container, NewsJumbotron);
+
+                    dom.insert(NewsJumbotron,
+                        dom.create(
+                            {tag:"h3", text:Group.News[i].Subject}));
+                    dom.insert(NewsJumbotron,
+                        dom.create(
+                            {tag:"h4", text:Group.News[i].Text}));
+
+                    var Users = dom.create(
+                            {tag:"p", text:""});
+                    dom.insert(NewsJumbotron, Users);
+                    if(Group.News[i].Author.Id > 0){
+                        dom.insert(Users,
+                            dom.create(
+                                {tag:"no", 
+                                text:""}));
+                        dom.insert(Users,
+                            dom.create(
+                                {tag:"a", 
+                                text:Group.News[i].Author.Name + " " + Group.News[i].Author.Surname + " " + Group.News[i].Author.Patronymic + " ", 
+                                href:"#people#user#" + Group.News[i].Author.Id}));
+                    }
+                    dom.insert(Users,
+                        dom.create(
+                            {tag:"p", 
+                            text:Group.News[i].Datetime}));
+                }
             },
         };
         return priv;

@@ -69,10 +69,10 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                 dom.insert(Container, Jumbotron);
                 dom.insert(Jumbotron,
                     dom.create(
-                        {tag:"h2", text:News.Subject}));
+                        {tag:"h3", text:News.Subject}));
                 dom.insert(Jumbotron,
                     dom.create(
-                        {tag:"h3", text:News.Text}));
+                        {tag:"h4", text:News.Text}));
 
                 var Users = dom.create(
                         {tag:"p", text:""});
@@ -81,7 +81,7 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                     dom.insert(Users,
                         dom.create(
                             {tag:"no", 
-                            text:"Автор: "}));
+                            text:""}));
                     dom.insert(Users,
                         dom.create(
                             {tag:"a", 
@@ -90,8 +90,8 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                 }
                 dom.insert(Users,
                     dom.create(
-                        {tag:"no", 
-                        text:"из группы: "}));
+                        {tag:"div", 
+                        text:""}));
                 dom.insert(Users,
                     dom.create(
                         {tag:"a", 
@@ -99,8 +99,8 @@ define(["modules/html/dom", "modules/html/bootstrap", "modules/websocket"],
                         href:"#projects#" + News.Group.Id}));
                 dom.insert(Users,
                     dom.create(
-                        {tag:"no", 
-                        text:" в: " + News.Datetime}));
+                        {tag:"p", 
+                        text:News.Datetime}));
 
                 /*console.log(User);
                 var WellUser = dom.insert(
